@@ -47,14 +47,8 @@ bindkey '^Z' fancy-ctrl-z
 # expand !! with a space to see command that will be executed
 bindkey ' ' magic-space
 
-# set shell in vi mode
-bindkey -v
-
-# delay timeout vi
-export KEYTIMEOUT=1
-
 function fzf-select-history() {
-    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
+    BUFFER=$(history | fzf --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle reset-prompt
 }
