@@ -4,8 +4,7 @@ ZSH_THEME="oh-my-git"
 
 antigen use oh-my-zsh
 antigen bundle fasd
-antigen bundle arialdomartini/oh-my-git
-antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
+antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
