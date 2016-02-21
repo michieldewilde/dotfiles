@@ -30,7 +30,7 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias ea='nvim ~/.dotfiles/aliases.zsh' #alias edit
 alias ra='source ~/.dotfiles/aliases.zsh'  #alias reload
 alias ev='nvim ~/.dotfiles/.vimrc'
-alias ez='nvim ~/.dotfiles/.vimrc'
+alias ez='nvim ~/.dotfiles/.zshrc'
 alias rz='source ~/.dotfiles/.zshrc'
 
 # Git Aliases
@@ -73,6 +73,11 @@ alias tns="tmux new -s"
 alias tat="tmux attach -t"
 alias tst="tmux switch -t"
 alias tls="tmux list-sessions"
+
+# ps
+alias psa="ps aux"
+alias ga="alias | grep "
+alias psg="ps aux | grep "
 
 # ------------------------------------
 # Docker alias and function
