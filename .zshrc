@@ -47,10 +47,3 @@ bindkey '^Z' fancy-ctrl-z
 # expand !! with a space to see command that will be executed
 bindkey ' ' magic-space
 
-function fzf-select-history() {
-    BUFFER=$(history | fzf --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle reset-prompt
-}
-zle -N fzf-select-history
-bindkey '^r' fzf-select-history
