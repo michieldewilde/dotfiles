@@ -25,8 +25,10 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # set nvim as default
-export EDITOR=/usr/local/bin/nvim
+export EDITOR=/usr/local/bin/vim
 
+# GOPATH
+export GOPATH=$HOME/Development/go
 # don't use tilda inside path use $HOME
 export PATH="/usr/local/bin:$PATH:$GOPATH/bin"
 
