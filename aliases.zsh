@@ -1,4 +1,4 @@
-alias v='f -e nvim' # quick opening files with vim
+alias v='f -e vim' # quick opening files with vim
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -27,15 +27,17 @@ done
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
 alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
-alias ea='nvim ~/.dotfiles/aliases.zsh' #alias edit
+alias ea='vim ~/.dotfiles/aliases.zsh' #alias edit
+alias ev='vim ~/.dotfiles/.vimrc'
+alias ez='vim ~/.dotfiles/.zshrc'
+alias et='vim ~/.dotfiles/.tmux.conf'
 alias ra='source ~/.dotfiles/aliases.zsh'  #alias reload
-alias ev='nvim ~/.dotfiles/.vimrc'
-alias ez='nvim ~/.dotfiles/.zshrc'
 alias rz='source ~/.dotfiles/.zshrc'
+
 
 # Git Aliases
 alias gs='git status'
-alias gi='nvim .gitignore'
+alias gi='vim .gitignore'
 alias ga='git add -A'
 alias gl='git l'
 alias gf='git fetch'
@@ -78,6 +80,9 @@ alias tls="tmux list-sessions"
 alias psa="ps aux"
 alias ga="alias | grep "
 alias psg="ps aux | grep "
+
+# edit hosts
+alias eh="sudo vim /etc/hosts"
 
 # ------------------------------------
 # Docker alias and function
