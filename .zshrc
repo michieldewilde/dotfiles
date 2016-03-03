@@ -48,4 +48,3 @@ bindkey '^Z' fancy-ctrl-z
 
 # expand !! with a space to see command that will be executed
 bindkey ' ' magic-space
-
