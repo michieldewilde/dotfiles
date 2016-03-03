@@ -71,6 +71,7 @@ alias opf="open -a finder"
 alias go=colorgo
 
 # Tmux
+alias tmux="TERM=screen-256color-bce tmux"
 alias tns="tmux new -s"
 alias tat="tmux attach -t"
 alias tst="tmux switch -t"
