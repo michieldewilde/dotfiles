@@ -14,13 +14,16 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 " completion
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py'  }
-" let it rain snippets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'junegunn/seoul256.vim'
+Plug 'chiedojohn/vim-case-convert'
 call plug#end()
 
 " ================ General Config ====================
 
+set nocompatible
 set completeopt+=noinsert,menuone,longest,noselect
+set completeopt-=preview
+set term=screen-256color
 
 let mapleader      = ' '
 let maplocalleader = ' '
@@ -113,3 +116,6 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 let g:UltiSnipsExpandTrigger="<c-x>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" replace selection
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
