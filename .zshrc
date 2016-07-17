@@ -1,35 +1,38 @@
 source $HOME/.dotfiles/antigen.zsh
 
-ZSH_THEME="oh-my-git"
-
 antigen use oh-my-zsh
 antigen bundle fasd
-antigen theme https://github.com/caiogondim/bullet-train-oh-my-zsh-theme bullet-train
-antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#eval $(docker-machine env default)
+
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+autoload -U promptinit && promptinit
+prompt pure
+
 # load aliases
 source ~/.dotfiles/aliases.zsh
-
-# User configuration
 # getting fasd to work
 eval "$(fasd --init posix-alias zsh-hook)"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [ -s "/Users/Coding/.scm_breeze/scm_breeze.sh" ] && source "/Users/Coding/.scm_breeze/scm_breeze.sh"
 
-# setup fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+## set nvim as default
+export EDITOR=/usr/local/bin/nvim
 
-# set nvim as default
-export EDITOR=/usr/local/bin/vim
+# Go Stuff
+export GO15VENDOREXPERIMENT=1
 
 # GOPATH
 export GOPATH=$HOME/Development/go
-# don't use tilda inside path use $HOME
 export PATH="/usr/local/bin:$PATH:$GOPATH/bin"
 
 eval $(docker-machine env default)

@@ -1,4 +1,4 @@
-alias v='f -e vim' # quick opening files with vim
+alias e="nvim "
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -27,21 +27,25 @@ done
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
 alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
-alias ea='vim ~/.dotfiles/aliases.zsh' #alias edit
-alias ev='vim ~/.dotfiles/.vimrc'
-alias ez='vim ~/.dotfiles/.zshrc'
-alias et='vim ~/.dotfiles/.tmux.conf'
+alias ea='nvim ~/.dotfiles/aliases.zsh' #alias edit
+alias ev='nvim ~/.dotfiles/.vimrc'
+alias ez='nvim ~/.dotfiles/.zshrc'
+alias et='nvim ~/.dotfiles/.tmux.conf'
 alias ra='source ~/.dotfiles/aliases.zsh'  #alias reload
 alias rz='source ~/.dotfiles/.zshrc'
 
 
 # Git Aliases
 alias gs='git status'
-alias gi='vim .gitignore'
+alias gr='git rebase'
+alias gri= 'git rebase -i'
+alias gbd='git branch -D'
+alias gi='nvim .gitignore'
 alias ga='git add -A'
 alias gl='git l'
 alias gf='git fetch'
 alias gd='git diff'
+alias gda='git diff --cached'
 # Staged and cached are the same thing
 alias gpl='git pull'
 alias gplr='git pull --rebase'
@@ -53,6 +57,7 @@ alias grsh='git reset --hard'
 alias gcd='git checkout develop'
 alias gcm='git checkout master'
 alias gcs='git checkout staging'
+alias gcb='git checkout -b'
 alias nah='git reset --hard;git clean -df;'
 
 # Common shell functions
@@ -69,6 +74,9 @@ alias mkdir="mkdir -p"
 alias ll="ls -al"
 alias opf="open -a finder"
 alias go=colorgo
+mkc() {
+  mkdir -p "$1" && cd "$1" || return 1
+}
 
 # Tmux
 alias tmux="TERM=screen-256color-bce tmux"
@@ -83,14 +91,21 @@ alias ga="alias | grep "
 alias psg="ps aux | grep "
 
 # edit hosts
-alias eh="sudo vim /etc/hosts"
+alias eh="sudo nvim /etc/hosts"
+
+# lock screen
+alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# fetch all remote branches
+gfar() {
+  for remote in `git branch -r`; do git branch --track $remote; done
+  git fetch --all
+  git pull --all
+}
 
 # ------------------------------------
 # Docker alias and function
 # ------------------------------------
-
-# Start docker
-alias start_docker="/Applications/Docker/Docker\ Quickstart\ Terminal.app/Contents/Resources/Scripts/start.sh"
 
 # Get latest container ID
 alias dl="docker ps -l -q"
@@ -133,3 +148,6 @@ dbu() { docker build -t=$1 .; }
 
 # Show all alias related docker
 dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+
+# Edit all files that are conflicted
+alias gde="git diff --name-only | uniq | xargs $EDITOR"
