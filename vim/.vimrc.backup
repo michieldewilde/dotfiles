@@ -1,0 +1,128 @@
+if &compatible
+  set nocompatible
+endif
+set runtimepath+={./dein}
+" Let the magic begin
+call plug#begin()
+" make life more easy
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+
+" fuzzy finder
+Plug 'junegunn/fzf',        { 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'shawncplus/phpcomplete.vim'
+Plug 'bling/vim-airline'
+Plug 'danro/rename.vim'
+
+call plug#end()
+
+" ================ General Config ====================
+
+set nocompatible
+set completeopt+=noinsert,menuone,longest,noselect
+set completeopt-=preview
+
+" set space as leader
+let mapleader      = ' '
+let maplocalleader = ' '
+
+filetype plugin indent on
+autocmd FileType yaml setl indentkeys-=<:>
+
+set backspace=2         " Backspace deletes like most programs in insert mode
+set hidden
+set ruler               " show the cursor position all the time
+set showcmd             " display incomplete commands
+set laststatus=2        " always display the status line
+
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
+
+syntax enable
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme OceanicNext
+set background=dark
+
+" set airline theme
+let g:airline_theme='oceanicnext'
+
+augroup vimrcEx
+  autocmd!
+  " When editing a file always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \ exe "normal g`\"" |
+    \ endif
+
+set expandtab
+
+" Disable mouse
+set mouse-=a
+
+" Line numbers
+set number
+set numberwidth=1
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:¬,nbsp:¬
+
+" Open new splits panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Auto indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+
+" Scrolling
+set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Allow using repeat operator with a visual selection
+vnoremap . :mornal .<CR>
+
+" Wrapped lines goes down/up to next row, rather than next line in file
+noremap j gj
+noremap k gk
+
+" Map frequent actions
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>. :FZF!<CR>
+nnoremap <Leader><Leader> <c-^>
+nnoremap <silent><leader>n :set rnu! rnu? <cr>
+
+" replace selection
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" php
+autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+
+" fuck these matching thingies
+ino - ->
+ino " ""<left>
+ino ' ''<left>
+ino ( ()<left>
+ino [ []<left>
+ino { {}<left>
+ino {<CR> {<CR>}<ESC>O

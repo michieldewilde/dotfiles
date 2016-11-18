@@ -1,0 +1,24 @@
+HOSTNAME=`hostname`
+DOTFILES_DIR="$HOME/.dotfiles"
+
+mkdir -p "$HOME/.cache"
+mkdir -p "$HOME/.tmp"
+
+source $DOTFILES_DIR/zsh/global.zsh
+source $DOTFILES_DIR/zsh/completion.zsh
+source $DOTFILES_DIR/zsh/directories.zsh
+source $DOTFILES_DIR/zsh/history.zsh
+source $DOTFILES_DIR/zsh/aliases.zsh
+source $DOTFILES_DIR/zsh/functions.zsh
+source $DOTFILES_DIR/zsh/plugins.zsh
+
+if hash fzf >/dev/null 2>&1; then
+    source $DOTFILES_DIR/zsh/plugins/fzf.zsh
+fi
+
+autoload -U promptinit && promptinit
+prompt pure
+
+[ -s "/Users/Coding/.scm_breeze/scm_breeze.sh" ] && source "/Users/Coding/.scm_breeze/scm_breeze.sh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,9 +1,6 @@
 # improve colors
 set -g default-terminal "xterm"
 
-# set fish as default
-set-option -g default-shell /usr/local/bin/zsh
-
 #switch panels
 bind k selectp -U # switch to panel Up
 bind j selectp -D # switch to panel Down 
@@ -53,15 +50,12 @@ set -g history-limit 10000
 bind-key C-a last-window
 bind-key C-s last-pane
 
-# Test scrolling
-bind -n WheelUpPane   select-pane -t= \; copy-mode -e \; send-keys -M
-bind -n WheelDownPane select-pane -t= \;                 send-keys -M
-
-# Local config
-if-shell "[ -f ~/.tmux.conf.local ]" 'source ~/.tmux.conf.local'
+# Set mouse scrolling on
+set-option -g mouse on
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e'"
 
 # Restore when tmux is starting
-set -g @continuum-restore 'of'
+set -g @continuum-restore 'on'
 set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'iterm,fullscreen'
 
@@ -72,6 +66,8 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-pain-control'
 
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded.."
 run '~/.tmux/plugins/tpm/tpm'
