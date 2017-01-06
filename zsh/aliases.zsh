@@ -15,36 +15,25 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew c
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
 # edit and reload config files
-alias ea='nvim $DOTFILES_DIR/zsh/aliases.zsh'
+alias ea='nvim ~/.dotfiles/zsh/aliases.zsh'
+alias ep='nvim ~/.dotfiles/zsh/plugins.zsh'
 alias eh="sudo nvim /etc/hosts"
-alias ev='nvim $HOME/.vimrc'
-alias ez='nvim $HOME/.zshrc'
-alias et='nvim $HOME/.tmux.conf'
-alias rz='source $HOME/.zshrc'
+alias ev='nvim ~/.dotfiles/vim/init.vim'
+alias ez='nvim ~/.dotfiles/zsh/zshrc'
+alias et='nvim ~/.dotfiles/tmux/tmux.conf'
+alias rz='source ~/.dotfiles/zsh/zshrc'
 
 # clean and reset git repository
 alias nah='git reset --hard;git clean -df;'
-
-# fetch all remote branches
-alias nah='git reset --hard;git clean -df;'
-gfar() {
-  for remote in `git branch -r`; do git branch --track $remote; done
-  git fetch --all
-  git pull --all
-}
 
 # Homebrew
 alias brewu='brew update && brew upgrade && brew cleanup && brew prune && brew doctor'
 
 # Just handy stuff
 alias mkdir="mkdir -p"
+alias l="ls -al"
 alias ll="ls -al"
 alias opf="open -a finder"
-
-# create directory and navigate in it
-mkc() {
-  mkdir -p "$1" && cd "$1" || return 1
-}
 
 # Tmux
 alias tmux="TERM=screen-256color-bce tmux"
@@ -53,8 +42,22 @@ alias tat="tmux attach -t"
 alias tst="tmux switch -t"
 alias tls="tmux list-sessions"
 
-# enter homestead
-alias hs="cd ~/Development/Homestead/ && vagrant up && vagrant ssh"
+function hs() {
+    cd ~/Development/Homestead
+
+    if [ $1 = "edit" ]; then
+        open ~/.homestead/homestead.yaml
+    else
+        if [ -z "$command" ]; then 
+            command="ssh"
+        fi
+
+        eval "vagrant ${command}"
+    fi
+
+    #switch back to directory where command was performed in
+    cd -
+}
 
 # Edit all files that are conflicted
 alias gde="git diff --name-only | uniq | xargs $EDITOR"
@@ -120,3 +123,19 @@ alias grep='grep --color=auto'
 alias vgrep='grep -v --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+# set git to hub
+alias git=hub
+alias gs='git status'
+
+# kill all the tabs in chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+alias chrome_kill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# URL-encode strings
+# usage: urlencode "<string>"
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+# string to json
+# usage: jsonify "<string>"
+alias jsonify='python -c '"'"'import json, sys; input_str=sys.argv[1]; print json.loads(input_str.replace("\n", "\\n").replace("\r", "\\r"));'"'"' '

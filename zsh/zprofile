@@ -1,0 +1,17 @@
+# PATH
+export BIN="/usr/local/bin"
+export SBIN="/usr/local/sbin"
+export NPM="/usr/local/bin/npm"
+export PATH=$BIN:$SBIN:$NPM:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/.rvm/bin
+export PATH="$(brew --prefix homebrew/php/php70)/bin:$PATH"
+export HOMEBREW_NO_ANALYTICS=1
+
+# EDITOR
+export EDITOR=/usr/local/bin/nvim
+export VISUAL=/usr/local/bin/nvim
+
+# Various Environment Variables
+export TERM=xterm-256color
+
+# GO
+export GOPATH=$HOME/development/go

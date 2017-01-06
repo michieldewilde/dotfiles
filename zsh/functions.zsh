@@ -90,7 +90,7 @@ function fix-dir-perm() {
 }
 
 # Create a directory and "cd" into it
-function mkdir-cd() {
+function mkd() {
     mkdir "${1}" && cd "${1}"
 }
 
@@ -102,4 +102,89 @@ function glob-find-files-by-name() {
 # Backup a file
 function backup-file() {
     cp -r "$1"{,.bak};
+}
+
+function gfar() {
+  for remote in `git branch -r`; do git branch --track $remote; done
+  git fetch --all
+  git pull --all
+}
+
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+functions fo() {
+  local out file key
+  IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+  fi
+}
+
+# fkill - kill process
+fkill() {
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    sudo kill -${1:-9} $pid
+  fi
+}
+
+# fbr - checkout git branch (including remote branches)
+fbr() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+# fco - checkout git branch/tag
+fco() {
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all | grep -v HEAD             |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") |
+    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout $(echo "$target" | awk '{print $2}')
+}
+
+# fs [FUZZY PATTERN] - Select selected tmux session
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
+}
+
+# Update zplug
+function update_zplug {
+	echo '———> Updating zplug...';
+    zplug update --self
+	echo '———> Updating zplug packages...';
+	zplug update
+}
+
+function update_mac {
+    update_zplug()
+	echo '———> Running brew update...';
+	brew update;
+	echo '———> Running brew upgrade...';
+	brew upgrade --all;
+	echo '———> Running brew cleanup...';
+	brew cleanup;
+	echo '———> Running brew prune...';
+	brew prune;
+	echo '———> Running brew doctor...';
+	brew doctor;
 }
