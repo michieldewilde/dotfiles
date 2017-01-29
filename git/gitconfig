@@ -1,0 +1,96 @@
+[user]
+	name = Michiel De Wilde
+	email = mich.dewild@gmail.com
+[core]
+	editor = nvim
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = ~/.gitignore
+[web]
+	browser = google-chrome
+[push]
+	default = matching
+[diff]
+	tool = nvimdiff
+[gitflow "prefix"]
+	feature = feature-
+	release = release-
+	hotfix = hotfix-
+	support = support-
+	versiontag = v
+[alias]
+	a = add
+	#############
+	ap = apply
+	as = apply --stat
+	ac = apply --check
+	#############
+	b = branch
+	bd = branch -d
+	#############
+	c = commit
+	ca = commit -a
+	cc = commit --amend
+	cm = commit -m
+	#############
+	d = diff
+	dc = diff --cached
+	dl = difftool
+	dlc = difftool --cached
+	#############
+	f = fetch
+	#############
+	l = log --oneline
+	#############
+	m = merge
+	############
+	o = checkout
+	ob = checkout -b
+	############
+	ps = push
+	psf = push -f
+	pso = push origin
+	psom = push origin master
+	############
+	pl = pull
+	############
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbi = rebase --interactive
+	rbs = rebase --skip
+	############
+	re = reset
+	############
+	r = remote
+	ra = remote add
+	rr = remote rm
+	rv = remote -v
+	rp = remote prune
+	rs = remote show
+	#############
+	s = status
+	sb = status -s -b
+	#############
+	sa = stash apply
+	sc = stash clear
+	sl = stash list
+	sp = stash pop
+	#############
+	subpull = !git submodule foreach git pull --tags origin master
+	subrepo = !sh -c 'filter-branch --prune-empty --subdirectory-filter $1 master' -
+	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+	#############
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	publish = "!git push -u origin $(git branch-name)"
+	unpublish = "!git push -u origin $(git branch-name)"
+	#############
+	unstage = reset HEAD
+	#############
+	delete-merged-branches = "!git o master && git branch --merged | grep -v '\\*' | xargs -nl git branch -d"
+	#############
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	#############
+	filelog = log -u
+	fl = log -u
+

@@ -14,6 +14,7 @@ zplug "seebi/dircolors-solarized"
 # Liquid prompt
 LP_ENABLE_TIME=1
 LP_USER_ALWAYS=1
+LP_ENABLE_BATT=0
 zplug 'nojhan/liquidprompt'
 
 if ! zplug check --verbose; then
@@ -32,28 +33,6 @@ fi
 if zplug check seebi/dircolors-solarized; then
     eval "$(gdircolors ${ZPLUG_HOME}/repos/seebi/dircolors-solarized/dircolors.ansi-light)"
 fi
-
-local base03="234"
-local base02="235"
-local base01="240"
-local base00="241"
-local base0="244"
-local base1="245"
-local base2="254"
-local base3="230"
-local yellow="136"
-local orange="166"
-local red="160"
-local magenta="125"
-local violet="61"
-local blue="33"
-local cyan="37"
-local green="64"
-
-export FZF_DEFAULT_OPTS="
---color fg:-1,bg:-1,hl:$blue,fg+:$base02,bg+:$base2,hl+:$blue
---color info:$yellow,prompt:$yellow,pointer:$base03,marker:$base03,spinner:$yellow
-"
 
 bindkey '^F' fzf-file-widget
 export FZF_TMUX=1

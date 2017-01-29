@@ -24,3 +24,14 @@ source $DOTFILES_DIR/zsh/plugins.zsh
 # overwrite alias
 unalias gls
 alias ls='gls --color=auto'
+
+if [[ -z "$TMUX" ]]
+then
+    ID="`tmux ls | grep -vm1 attached | cut -d: -f1`"
+    if [[ -z "$ID" ]]
+    then
+        tmux new-session
+    else
+        tmux attach-session -t "$ID"
+    fi
+fi

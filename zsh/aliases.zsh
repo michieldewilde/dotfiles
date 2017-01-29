@@ -29,6 +29,9 @@ alias nah='git reset --hard;git clean -df;'
 # Homebrew
 alias brewu='brew update && brew upgrade && brew cleanup && brew prune && brew doctor'
 
+# Diffing
+alias nvimdiff="nvim -d"
+
 # Just handy stuff
 alias mkdir="mkdir -p"
 alias l="ls -al"

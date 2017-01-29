@@ -1,47 +1,49 @@
-call plug#begin()
+source $HOME/.dotfiles/vim/general.vim
+source $HOME/.dotfiles/vim/plugins.vim
+source $HOME/.dotfiles/vim/bindings.vim
+source $HOME/.dotfiles/vim/functions.vim
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'terryma/vim-expand-region'
-Plug 'itchyny/vim-cursorword'
-Plug 'altercation/vim-colors-solarized'
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" If you have Neovim >= 0.1.5
+if (has("termguicolors"))
+  set termguicolors
+endif
 
-call plug#end()
+" TODO put following in files
 
-" colorscheme
-colorscheme solarized
-set background=light
+" Disable mouse click to go to position
+set mouse-=a
 
-" true color
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" Highlight 80th column
+set colorcolumn=80
 
-" set leader
-let mapleader = "\<Space>"
-" show feedback when leader has been pressed and is waiting
-set showcmd
+" Theme
+syntax enable
+colorscheme onedark
 
-nnoremap <Leader>fw :w<CR>
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_enter = 0
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-" copy & paste to system clipboard with <leader>p and <leader>y
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+augroup end
 
-" expand region
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
+set completeopt=longest,menuone,preview
+let g:deoplete#sources = {}
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete',
+  \ 'jspc#omni'
+\]
 
-" open file by <leader> ff
-nnoremap <Leader>ff :Files<CR>
-
-" open buffer by <leader> fb
-nnoremap <Leader>fb :Buffers<CR>
-
-" Add line numbers
-set number
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:SuperTabClosePreviewOnPopupClose = 1
