@@ -12,7 +12,7 @@ if dein#load_state('/Users/Coding/.cache/dein')
   " ------------------------------------------------------------------------------
   " ColorSchemes {{{
   " ------------------------------------------------------------------------------
-  call dein#add('joshdick/onedark.vim')
+  call dein#add('NLKNguyen/papercolor-theme')
   call dein#add('vim-airline/vim-airline-themes')
   " }}}
   " ------------------------------------------------------------------------------
