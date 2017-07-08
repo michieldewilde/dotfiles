@@ -45,23 +45,6 @@ alias tat="tmux attach -t"
 alias tst="tmux switch -t"
 alias tls="tmux list-sessions"
 
-function hs() {
-    cd ~/Development/Homestead
-
-    if [ $1 = "edit" ]; then
-        open ~/.homestead/homestead.yaml
-    else
-        if [ -z "$command" ]; then 
-            command="ssh"
-        fi
-
-        eval "vagrant ${command}"
-    fi
-
-    #switch back to directory where command was performed in
-    cd -
-}
-
 # Edit all files that are conflicted
 alias gde="git diff --name-only | uniq | xargs $EDITOR"
 alias gdf="git diff --color | diff-so-fancy"
@@ -130,10 +113,11 @@ alias fgrep='fgrep --color=auto'
 # set git to hub
 alias git=hub
 alias gs='git status'
+alias gg='ghq get'
 
 # kill all the tabs in chrome to free up memory
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
-alias chrome_kill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
 # URL-encode strings
 # usage: urlencode "<string>"
@@ -142,3 +126,57 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 # string to json
 # usage: jsonify "<string>"
 alias jsonify='python -c '"'"'import json, sys; input_str=sys.argv[1]; print json.loads(input_str.replace("\n", "\\n").replace("\r", "\\r"));'"'"' '
+
+# ------------------------------------
+# Docker alias and function
+# ------------------------------------
+
+# Get latest container ID
+alias dl="docker ps -l -q"
+
+# Get container process
+alias dps="docker ps"
+
+# Get process included stop container
+alias dpa="docker ps -a"
+
+# Get images
+alias di="docker images"
+
+# Get container IP
+alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+
+# Run deamonized container, e.g., $dkd base /bin/echo hello
+alias dkd="docker run -d -P"
+
+# Run interactive container, e.g., $dki base /bin/bash
+alias dki="docker run -i -t -P"
+
+# Execute interactive container, e.g., $dex base /bin/bash
+alias dex="docker exec -i -t"
+
+# Stop all containers
+dstop() { docker stop $(docker ps -a -q); }
+
+# Remove all containers
+drm() { docker rm $(docker ps -a -q); }
+
+# Stop and Remove all containers
+alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+
+# Remove all images
+dri() { docker rmi $(docker images -q); }
+
+# Dockerfile build, e.g., $dbu tcnksm/test
+dbu() { docker build -t=$1 .; }
+
+# Show all alias related docker
+dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+
+# Music
+
+alias stream_dronezone='mplayer -playlist http://somafm.com/dronezone130.pls'
+alias stream_groovesalad='mplayer -playlist http://somafm.com/groovesalad130.pls'
+alias stream_missioncontrol='mplayer -playlist http://somafm.com/missioncontrol130.pls'
+alias stream_defcon='mplayer -playlist http://somafm.com/defcon130.pls'
+alias stream_cliqhop='mplayer -playlist http://somafm.com/cliqhop130.pls'

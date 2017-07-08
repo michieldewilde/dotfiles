@@ -105,86 +105,192 @@ function backup-file() {
 }
 
 function gfar() {
-  for remote in `git branch -r`; do git branch --track $remote; done
-  git fetch --all
-  git pull --all
+    for remote in `git branch -r`; do git branch --track $remote; done
+    git fetch --all
+    git pull --all
 }
 
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
 functions fo() {
-  local out file key
-  IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
+    local out file key
+    IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+    key=$(head -1 <<< "$out")
+    file=$(head -2 <<< "$out" | tail -1)
+    if [ -n "$file" ]; then
+        [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+    fi
 }
 
 # fkill - kill process
 fkill() {
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
 
-  if [ "x$pid" != "x" ]
-  then
-    sudo kill -${1:-9} $pid
-  fi
+    if [ "x$pid" != "x" ]
+    then
+        sudo kill -${1:-9} $pid
+    fi
 }
 
 # fbr - checkout git branch (including remote branches)
 fbr() {
-  local branches branch
-  branches=$(git branch --all | grep -v HEAD) &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+    local branches branch
+    branches=$(git branch --all | grep -v HEAD) &&
+    branch=$(echo "$branches" |
+             fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
 # fco - checkout git branch/tag
 fco() {
-  local tags branches target
-  tags=$(
-    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
-  branches=$(
-    git branch --all | grep -v HEAD             |
-    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-  target=$(
-    (echo "$tags"; echo "$branches") |
-    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-  git checkout $(echo "$target" | awk '{print $2}')
-}
+    local tags branches target
+    tags=$(
+      git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+    branches=$(
+      git branch --all | grep -v HEAD             |
+      sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+      sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+    target=$(
+      (echo "$tags"; echo "$branches") |
+      fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+    git checkout $(echo "$target" | awk '{print $2}')
+  }
 
 # fs [FUZZY PATTERN] - Select selected tmux session
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
 fs() {
-  local session
-  session=$(tmux list-sessions -F "#{session_name}" | \
-    fzf --query="$1" --select-1 --exit-0) &&
-  tmux switch-client -t "$session"
+    local session
+    session=$(tmux list-sessions -F "#{session_name}" | \
+      fzf --query="$1" --select-1 --exit-0) &&
+    tmux switch-client -t "$session"
 }
 
 # Update zplug
 function update_zplug {
-	echo '———> Updating zplug...';
+    echo '———> Updating zplug...';
     zplug update --self
-	echo '———> Updating zplug packages...';
-	zplug update
+    echo '———> Updating zplug packages...';
+    zplug update
+}
+
+has() {
+    type "${1:?too few arguments}" &>/dev/null
+}
+
+# reload resets Completion function
+reload() {
+    local f
+    f=(~/.zsh/Completion/*(.))
+    unfunction $f:t 2>/dev/null
+    autoload -U $f:t
+}
+
+# is_login_shell returns true if current shell is first shell
+is_login_shell() {
+    [[ $SHLVL == 1 ]]
+}
+
+# is_git_repo returns true if cwd is in git repository
+is_git_repo() {
+    git rev-parse --is-inside-work-tree &>/dev/null
+    return $status
+}
+
+# is_screen_running returns true if GNU screen is running
+is_screen_running() {
+    [[ -n $STY ]]
+}
+
+# is_tmux_runnning returns true if tmux is running
+is_tmux_runnning() {
+    [[ -n $TMUX ]]
+}
+
+# is_screen_or_tmux_running returns true if GNU screen or tmux is running
+is_screen_or_tmux_running() {
+    is_screen_running || is_tmux_runnning
+}
+
+# shell_has_started_interactively returns true if the current shell is
+# running from command line
+shell_has_started_interactively() {
+    [[ -n $PS1 ]]
+}
+
+# is_ssh_running returns true if the ssh deamon is available
+is_ssh_running() {
+    [[ -n $SSH_CLIENT ]]
+}
+
+# ostype returns the lowercase OS name
+ostype() {
+    echo ${(L):-$(uname)}
+}
+
+# os_detect export the PLATFORM variable as you see fit
+os_detect() {
+    export PLATFORM
+    case "$(ostype)" in
+        *'linux'*)  PLATFORM='linux'   ;;
+        *'darwin'*) PLATFORM='osx'     ;;
+        *'bsd'*)    PLATFORM='bsd'     ;;
+        *)          PLATFORM='unknown' ;;
+    esac
+}
+
+# is_osx returns true if running OS is Macintosh
+is_osx() {
+    os_detect
+    if [[ $PLATFORM == "osx" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+alias is_mac=is_osx
+
+# is_linux returns true if running OS is GNU/Linux
+is_linux() {
+    os_detect
+    if [[ $PLATFORM == "linux" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# is_bsd returns true if running OS is FreeBSD
+is_bsd() {
+    os_detect
+    if [[ $PLATFORM == "bsd" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# get_os returns OS name of the platform that is running
+get_os() {
+    local os
+    for os in osx linux bsd; do
+        if is_$os; then
+            echo $os
+        fi
+    done
 }
 
 function update_mac {
     update_zplug()
-	echo '———> Running brew update...';
-	brew update;
-	echo '———> Running brew upgrade...';
-	brew upgrade --all;
-	echo '———> Running brew cleanup...';
-	brew cleanup;
-	echo '———> Running brew prune...';
-	brew prune;
-	echo '———> Running brew doctor...';
-	brew doctor;
+    echo '———> Running brew update...';
+    brew update;
+    echo '———> Running brew upgrade...';
+    brew upgrade --all;
+    echo '———> Running brew cleanup...';
+    brew cleanup;
+    echo '———> Running brew prune...';
+    brew prune;
+    echo '———> Running brew doctor...';
+    brew doctor;
 }

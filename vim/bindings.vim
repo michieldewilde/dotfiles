@@ -52,9 +52,6 @@ nnoremap <leader>rp {ma}mb:'a,'bs/
 nnoremap g^ gUiW
 nnoremap gv guiW
 
-" default to very magic
-no / :Subvert/
-
 " gO to create a new line below cursor in normal mode
 nnoremap go o<ESC>k
 
@@ -107,15 +104,20 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " File Keybindings {{{
 " ============================================================================
 " Save
-noremap <leader>fs :w<CR>
+noremap <leader>sf :w<CR>
 
 " Open vimrc with <leader>fed
 nnoremap <leader>fed  :e $MYVIMRC<CR>
 nnoremap <leader>feR :source $MYVIMRC<CR>
+nnoremap <leader>fep :e ~/.dotfiles/vim/plugins.vim<CR>
 
 " Rename current file with <leader>fr
 noremap <leader>fr :call RenameFile()<CR>
 
 " Find file with <leader> ff
 nnoremap <Leader>ff :Files<CR>
+" Find file in history with <leader> fh
+nnoremap <Leader>fh :History<CR>
+nnoremap <Leader>fs :Ag<CR>
+
 " }}}

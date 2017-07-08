@@ -4,7 +4,8 @@
 [core]
 	editor = nvim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/Coding/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [web]
 	browser = google-chrome
 [push]

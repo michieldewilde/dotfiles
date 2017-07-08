@@ -74,7 +74,7 @@ set expandtab
 " Numbers
 set number
 set relativenumber
-set numberwidth=5
+set numberwidth=2
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -95,18 +95,3 @@ autocmd BufReadPost *
 
 "open help in a new ventical split instead of vimbuffer
 cnoreabbrev <expr> h getcmdtype() == ":" && getcmdline() == 'h' ? 'vert help' : 'h'
-
-" change cursor shapes according to current mode
-" only works in iTerm. tmux optional.
-" see http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
-if !empty($TMUX)
-  " inside a tmux session
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  " not inside a tmux session
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif

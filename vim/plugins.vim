@@ -12,7 +12,7 @@ if dein#load_state('/Users/Coding/.cache/dein')
   " ------------------------------------------------------------------------------
   " ColorSchemes {{{
   " ------------------------------------------------------------------------------
-  call dein#add('NLKNguyen/papercolor-theme')
+  call dein#add('morhetz/gruvbox')
   call dein#add('vim-airline/vim-airline-themes')
   " }}}
   " ------------------------------------------------------------------------------
@@ -20,25 +20,24 @@ if dein#load_state('/Users/Coding/.cache/dein')
   " ------------------------------------------------------------------------------
   " Core {{{
   " ------------------------------------------------------------------------------
-  call dein#add('tpope/vim-dispatch') " run tasks in a tmux split to not block vim
   call dein#add('tpope/vim-obsession') " improve vim session handling
-  call dein#add('sheerun/vim-polyglot') " Syntax highlighting, indent, etc. for various file types
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('jeffkreeftmeijer/vim-numbertoggle')
   " }}}
 
   " ------------------------------------------------------------------------------
   " Editing {{{
   " ------------------------------------------------------------------------------
-  call dein#add('tpope/vim-abolish', { 'on': ['Abolish', 'Subvert'] }) " better search
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-repeat')
   call dein#add('w0rp/ale') " new async syntax checker for neovim
-  call dein#add('tpope/vim-commentary') " easy commenting using vim motions
-  call dein#add('takac/vim-hardtime') " forces efficient movement in vim
-  call dein#add('terryma/vim-expand-region') " allow expanding visual selection region
-  call dein#add('tpope/vim-sleuth') " smart indent width based on buffer and neigbouring files
+  call dein#add('scrooloose/nerdcommenter') " easy commenting using vim motions
   call dein#add('jiangmiao/auto-pairs') " [{()}]
+  " }}}
+  " ------------------------------------------------------------------------------
+
+  " ------------------------------------------------------------------------------
+  " Completion {{{
+  " ------------------------------------------------------------------------------
+  call dein#add('maralla/completor.vim')
   " }}}
   " ------------------------------------------------------------------------------
 
@@ -47,37 +46,48 @@ if dein#load_state('/Users/Coding/.cache/dein')
   " ------------------------------------------------------------------------------
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-  call dein#add('justinmk/vim-sneak') " diagonal movements using S + 2 charaters
-  call dein#add('christoomey/vim-tmux-navigator') " easy navigation between tmux and vim splits
-  call dein#add('tpope/vim-unimpaired') " pairs of handy bracket mappings like [f and ]f for file switching
-  call dein#add('thinca/vim-visualstar') " allows to use the * motion in visual mode
-  " }}}
-  " ------------------------------------------------------------------------------
-
-  " ------------------------------------------------------------------------------
-  " Completion {{{
-  " ------------------------------------------------------------------------------
-  call dein#add('SirVer/ultisnips')
-  call dein#add('honza/vim-snippets')
-  call dein#add('Shougo/deoplete.nvim', { 'on_i': 1 })
-  
   " }}}
   " ------------------------------------------------------------------------------
 
   " ------------------------------------------------------------------------------
   " Javascript {{{
   " ------------------------------------------------------------------------------
-  call dein#add('ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] })
-  call dein#add('carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] })
-  call dein#add('othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] })
+  call dein#add('ternjs/tern_for_vim', { 'build': 'npm install', 'for': ['javascript', 'javascript.jsx'] })
+  call dein#add('moll/vim-node', { 'for': 'javascript' })
+  call dein#add('pangloss/vim-javascript', { 'for': 'javascript' })
   call dein#add('othree/yajs.vim', { 'for': 'javascript' })
+  call dein#add('heavenshell/vim-jsdoc', { 'for': 'javascript' })
   " }}}
   " ------------------------------------------------------------------------------
 
   " ------------------------------------------------------------------------------
-  " Rust {{{
+  " Typescript {{{
   " ------------------------------------------------------------------------------
-  call dein#add('rust-lang/rust.vim', { 'for': 'rust' })
+  call dein#add('Quramy/tsuquyomi', { 'build': 'make -f make_mac.mak', 'for': 'typescript' })
+  call dein#add('leafgarland/typescript-vim', { 'for': 'typescript' })
+  call dein#add('Quramy/vim-js-pretty-template', { 'for': 'typescript' })
+  call dein#add('jason0x43/vim-js-indent', { 'for': 'typescript' })
+  call dein#add('mhartington/vim-typings', { 'for': 'typescript' })
+  " }}}
+  " ------------------------------------------------------------------------------
+
+  " ------------------------------------------------------------------------------
+  " Visual {{{
+  " ------------------------------------------------------------------------------
+  call dein#add('sheerun/vim-polyglot') " Syntax highlighting, indent, etc. for various file types
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('jeffkreeftmeijer/vim-numbertoggle')
+  call dein#add('roman/golden-ratio')
+  call dein#add('christoomey/vim-tmux-navigator')
+  call dein#add('airblade/vim-gitgutter')
+  " }}}
+  " ------------------------------------------------------------------------------
+
+
+  " ------------------------------------------------------------------------------
+  " Markdown {{{
+  " ------------------------------------------------------------------------------
+  call dein#add('suan/vim-instant-markdown')
   " }}}
   " ------------------------------------------------------------------------------
 

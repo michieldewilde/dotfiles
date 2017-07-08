@@ -1,15 +1,38 @@
 ### PLUGINS ###
 export ZPLUG_HOME=~/.zplug
-source `brew --prefix zplug`/init.zsh
+source $ZPLUG_HOME/init.zsh
 
-zplug "aws/aws-cli", use:"bin/aws_zsh_completer.sh"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "plugins/colorize", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
+zplug "plugins/osx", from:oh-my-zsh
+
+zplug "b4b4r07/zsh-vimode-visual", use:"*.zsh", defer:3
 zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:3 # Should be loaded 2nd last.
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+zplug "glidenote/hub-zsh-completion"
+zplug 'Valodim/zsh-curl-completion'
 zplug "Valiev/almostontop"
-zplug "seebi/dircolors-solarized"
+
+zplug "tsenart/vegeta", \
+    as:command, \
+    hook-build: 'go get -d && go build'
+
+zplug "stedolan/jq", \
+    as:command, \
+    from:gh-r, \
+    rename-to:jq
+
+zplug "motemen/ghq", \
+    as:command, \
+    from:gh-r, \
+    rename-to:ghq
+
+zplug "reorx/httpstat", \
+    as:command, \
+    use:'(httpstat).py', \
+    rename-to:'$1', \
+    if:'(( $+commands[python] ))'
 
 # Liquid prompt
 LP_ENABLE_TIME=1
@@ -30,11 +53,9 @@ if zplug check b4b4r07/enhancd; then
     export ENHANCD_FILTER=fzf-tmux
 fi
 
-if zplug check seebi/dircolors-solarized; then
-    eval "$(gdircolors ${ZPLUG_HOME}/repos/seebi/dircolors-solarized/dircolors.ansi-light)"
+if zplug check motemen/ghq; then
+    export GHQ_ROOT=$HOME/src
 fi
 
-bindkey '^F' fzf-file-widget
 export FZF_TMUX=1
-export FZF_TMUX_HEIGHT=40%
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'

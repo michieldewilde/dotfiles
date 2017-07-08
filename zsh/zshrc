@@ -17,10 +17,12 @@ source $DOTFILES_DIR/zsh/history.zsh
 source $DOTFILES_DIR/zsh/aliases.zsh
 source $DOTFILES_DIR/zsh/functions.zsh
 source $DOTFILES_DIR/zsh/plugins.zsh
- 
-[ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# overwrite alias
-unalias gls
-alias ls='gls --color=auto'
+[ -s "/Users/Coding/.scm_breeze/scm_breeze.sh" ] && source "/Users/Coding/.scm_breeze/scm_breeze.sh"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+export PATH="$HOME/.yarn/bin:$PATH"
