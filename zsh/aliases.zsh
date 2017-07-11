@@ -15,13 +15,13 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew c
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
 # edit and reload config files
-alias ea='nvim ~/.dotfiles/zsh/aliases.zsh'
-alias ep='nvim ~/.dotfiles/zsh/plugins.zsh'
+alias ea='nvim ~/development/src/github.com/michieldewilde/dotfiles/zsh/aliases.zsh'
+alias ep='nvim ~/development/src/github.com/michieldewilde/dotfiles/zsh/plugins.zsh'
 alias eh="sudo nvim /etc/hosts"
-alias ev='nvim ~/.dotfiles/vim/init.vim'
-alias ez='nvim ~/.dotfiles/zsh/zshrc'
-alias et='nvim ~/.dotfiles/tmux/tmux.conf'
-alias rz='source ~/.dotfiles/zsh/zshrc'
+alias ev='nvim ~/development/src/github.com/michieldewilde/dotfiles/vim/init.vim'
+alias ez='nvim ~/development/src/github.com/michieldewilde/dotfiles/zsh/zshrc'
+alias et='nvim ~/development/src/github.com/michieldewilde/dotfiles/tmux/tmux.conf'
+alias rz='source ~/development/src/github.com/michieldewilde/dotfiles/zsh/zshrc'
 
 # clean and reset git repository
 alias nah='git reset --hard;git clean -df;'

@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 # ███████╗███████╗██╗  ██╗
 # ╚══███╔╝██╔════╝██║  ██║
 #   ███╔╝ ███████╗███████║
@@ -5,7 +6,7 @@
 # ███████╗███████║██║  ██║
 # ╚══════╝╚══════╝╚═╝  ╚═╝
 
-DOTFILES_DIR="$HOME/.dotfiles"
+DOTFILES_DIR="$HOME/development/src/github.com/michieldewilde/dotfiles"
 
 # backward TAB as Shift-TAB
 bindkey '^[[Z' reverse-menu-complete
@@ -19,10 +20,3 @@ source $DOTFILES_DIR/zsh/functions.zsh
 source $DOTFILES_DIR/zsh/plugins.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-[ -s "/Users/Coding/.scm_breeze/scm_breeze.sh" ] && source "/Users/Coding/.scm_breeze/scm_breeze.sh"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-export PATH="$HOME/.yarn/bin:$PATH"

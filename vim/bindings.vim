@@ -109,7 +109,7 @@ noremap <leader>sf :w<CR>
 " Open vimrc with <leader>fed
 nnoremap <leader>fed  :e $MYVIMRC<CR>
 nnoremap <leader>feR :source $MYVIMRC<CR>
-nnoremap <leader>fep :e ~/.dotfiles/vim/plugins.vim<CR>
+nnoremap <leader>fep :e ~/development/src/github.com/michieldewilde/dotfiles/vim/plugins.vim<CR>
 
 " Rename current file with <leader>fr
 noremap <leader>fr :call RenameFile()<CR>

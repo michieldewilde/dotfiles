@@ -1,13 +1,13 @@
 if &compatible
   set nocompatible               " Be iMproved
 endif
-set runtimepath+=/Users/Coding/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/Users/mdw/.config/dein/repos/github.com/Shougo/dein.vim
 
-if dein#load_state('/Users/Coding/.cache/dein')
-  call dein#begin('/Users/Coding/.cache/dein')
+if dein#load_state('/Users/mdw/.config/dein')
+  call dein#begin('/Users/mdw/.config/dein')
 
   " Dein manages dein
-  call dein#add('/Users/Coding/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('/Users/mdw/.config/dein/repos/github.com/Shougo/dein.vim')
 
   " ------------------------------------------------------------------------------
   " ColorSchemes {{{

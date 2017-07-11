@@ -1,7 +1,7 @@
-source $HOME/.dotfiles/vim/general.vim
-source $HOME/.dotfiles/vim/plugins.vim
-source $HOME/.dotfiles/vim/bindings.vim
-source $HOME/.dotfiles/vim/functions.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/general.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/plugins.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/bindings.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/functions.vim
 
 " Disable mouse click to go to position
 set mouse-=a
