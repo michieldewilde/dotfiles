@@ -1,10 +1,6 @@
-zmodload zsh/zprof
-# ███████╗███████╗██╗  ██╗
-# ╚══███╔╝██╔════╝██║  ██║
-#   ███╔╝ ███████╗███████║
-#  ███╔╝  ╚════██║██╔══██║
-# ███████╗███████║██║  ██║
-# ╚══════╝╚══════╝╚═╝  ╚═╝
+module_path+=( "/Users/mdw/.zplugin/mod-bin/zmodules/Src" )
+zmodload zdharma/zplugin
+source "$HOME/.zplugin/mod-bin/zplugin.zsh"
 
 DOTFILES_DIR="$HOME/development/src/github.com/michieldewilde/dotfiles"
 
@@ -19,4 +15,19 @@ source $DOTFILES_DIR/zsh/aliases.zsh
 source $DOTFILES_DIR/zsh/functions.zsh
 source $DOTFILES_DIR/zsh/plugins.zsh
 
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:${GOPATH//://bin:}:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export GOPATH="$HOME/development"
+export PATH=$PATH:$(go env GOPATH)/bin
+
+export GO111MODULE='on'
+
+export ENHANCD_FILTER=fzf-tmux
+export FZF_TMUX=1
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+
+export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export EXTRA_FZF_COMPLETIONS=(docker kubectl)

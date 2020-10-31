@@ -34,8 +34,8 @@ alias nvimdiff="nvim -d"
 
 # Just handy stuff
 alias mkdir="mkdir -p"
-alias l="ls -al"
-alias ll="ls -al"
+alias l="exa -abghl --git --color=automatic"
+alias ll="exa -abghl --git --color=automatic"
 alias opf="open -a finder"
 
 # Tmux
@@ -44,10 +44,14 @@ alias tns="tmux new -s"
 alias tat="tmux attach -t"
 alias tst="tmux switch -t"
 alias tls="tmux list-sessions"
+alias tks="tmux kill-session -t"
 
 # Edit all files that are conflicted
 alias gde="git diff --name-only | uniq | xargs $EDITOR"
-alias gdf="git diff --color | diff-so-fancy"
+alias gdf="git diff"
+alias gs="git gs"
+alias gco="git checkout"
+alias gcm="git commit -m"
 
 # Aliases only for non root users
 if [[ $UID != 0 || $EUID != 0 ]]; then
@@ -82,11 +86,6 @@ alias ports="lsof -ni | grep LISTEN"
 alias dl='curl --continue-at - --location --progress-bar --remote-name --remote-time' # Download remote file
 alias wget-site='wget --mirror -p --convert-links -P'
 
-# Laravel helpers
-alias art='php artisan'
-alias mig-install='php artisan migrate:install'
-alias mig-seed='php artisan migrate:refresh --seed'
-
 for method in GET HEAD POST PUT DELETE PURGE TRACE OPTIONS; do
     alias "$method"="http '$method'"
 done
@@ -112,12 +111,6 @@ alias fgrep='fgrep --color=auto'
 
 # set git to hub
 alias git=hub
-alias gs='git status'
-alias gg='ghq get'
-
-# kill all the tabs in chrome to free up memory
-# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
-alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
 # URL-encode strings
 # usage: urlencode "<string>"
@@ -144,7 +137,7 @@ alias dpa="docker ps -a"
 alias di="docker images"
 
 # Get container IP
-alias dip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+alias dip="docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
 # Run deamonized container, e.g., $dkd base /bin/echo hello
 alias dkd="docker run -d -P"
@@ -173,10 +166,40 @@ dbu() { docker build -t=$1 .; }
 # Show all alias related docker
 dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
 
-# Music
+# fstash - easier way to deal with stashes
+# type fstash to get a list of your stashes
+# enter shows you the contents of the stash
+# ctrl-d shows a diff of the stash against your current HEAD
+# ctrl-b checks the stash out as a branch, for easier merging
+fstash() {
+  local out q k sha
+  while out=$(
+    git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" |
+    fzf --ansi --no-sort --query="$q" --print-query \
+        --expect=ctrl-d,ctrl-b);
+  do
+    mapfile -t out <<< "$out"
+    q="${out[0]}"
+    k="${out[1]}"
+    sha="${out[-1]}"
+    sha="${sha%% *}"
+    [[ -z "$sha" ]] && continue
+    if [[ "$k" == 'ctrl-d' ]]; then
+      git diff $sha
+    elif [[ "$k" == 'ctrl-b' ]]; then
+      git stash branch "stash-$sha" $sha
+      break;
+    else
+      git stash show -p $sha
+    fi
+  done
+}
 
 alias stream_dronezone='mplayer -playlist http://somafm.com/dronezone130.pls'
 alias stream_groovesalad='mplayer -playlist http://somafm.com/groovesalad130.pls'
-alias stream_missioncontrol='mplayer -playlist http://somafm.com/missioncontrol130.pls'
 alias stream_defcon='mplayer -playlist http://somafm.com/defcon130.pls'
-alias stream_cliqhop='mplayer -playlist http://somafm.com/cliqhop130.pls'
+
+alias did="vim +'normal Go' +'r!date' ~/did.txt"
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+alias path='echo -e ${PATH//:/\\n}'

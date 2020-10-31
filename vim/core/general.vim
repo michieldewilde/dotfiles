@@ -2,6 +2,12 @@
 " General settings {{{
 " ============================================================================
 
+" Disable mouse click to go to position
+set mouse-=a
+
+" Highlight 80th column
+set colorcolumn=80
+
 " Sets the character encoding for the file of this buffer.
 if !&readonly
   set fileencoding=utf-8
@@ -40,11 +46,7 @@ set fillchars=vert:¦
 set list
 
 " set listchars=tab:▸\ ,trail:-,extends:>,precedes:<,eol:¬
-set listchars=tab:▸\ ,trail:-,extends:>,precedes:<
-
-" fix suggested in a neovim issue where buffer switching was slow
-" in combination with vim-airline and neovim
-set hid
+set listchars=tab:>-,trail:·,extends:>,precedes:<
 
 " When this option is set, the screen will not be redrawn while
 " executing macros, registers and other commands that have not been
@@ -84,6 +86,25 @@ set clipboard=unnamed
 
 " Show visual indication if your using substitute command
 set inccommand=split
+
+set hidden
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it for commit messages, when the position is invalid, or when

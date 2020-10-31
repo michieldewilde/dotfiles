@@ -1,15 +1,17 @@
 [user]
-	name = Michiel De Wilde
+	name = michiel de wilde
 	email = mich.dewild@gmail.com
+	signinkey = ECFE409FE4136F1A
+	signingkey = 6F98377D2216B9D6
 [core]
 	editor = nvim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = /Users/Coding/.gitignore_global
+	excludesfile = /Users/mdw/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [web]
 	browser = google-chrome
 [push]
-	default = matching
+	default = upstream
 [diff]
 	tool = nvimdiff
 [gitflow "prefix"]
@@ -18,80 +20,39 @@
 	hotfix = hotfix-
 	support = support-
 	versiontag = v
+[merge]
+  ff = only
+  conflictstyle = diff3
+[commit]
+	gpgsign = true
+[status]
+  showUntrackedFiles = all
+  # Sometimes a newly-added folder, since it's only one line in git status, can slip under the radar.
+  # https://git-scm.com/docs/git-config#git-config-statusshowUntrackedFiles
 [alias]
-	a = add
-	#############
-	ap = apply
-	as = apply --stat
-	ac = apply --check
-	#############
-	b = branch
-	bd = branch -d
-	#############
-	c = commit
-	ca = commit -a
-	cc = commit --amend
-	cm = commit -m
-	#############
-	d = diff
-	dc = diff --cached
-	dl = difftool
-	dlc = difftool --cached
-	#############
-	f = fetch
-	#############
-	l = log --oneline
-	#############
-	m = merge
-	############
-	o = checkout
-	ob = checkout -b
-	############
-	ps = push
-	psf = push -f
-	pso = push origin
-	psom = push origin master
-	############
-	pl = pull
-	############
-	rb = rebase
-	rba = rebase --abort
-	rbc = rebase --continue
-	rbi = rebase --interactive
-	rbs = rebase --skip
-	############
-	re = reset
-	############
-	r = remote
-	ra = remote add
-	rr = remote rm
-	rv = remote -v
-	rp = remote prune
-	rs = remote show
-	#############
-	s = status
-	sb = status -s -b
-	#############
-	sa = stash apply
-	sc = stash clear
-	sl = stash list
-	sp = stash pop
-	#############
-	subpull = !git submodule foreach git pull --tags origin master
-	subrepo = !sh -c 'filter-branch --prune-empty --subdirectory-filter $1 master' -
-	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-	#############
-	branch-name = "!git rev-parse --abbrev-ref HEAD"
-	publish = "!git push -u origin $(git branch-name)"
-	unpublish = "!git push -u origin $(git branch-name)"
-	#############
-	unstage = reset HEAD
-	#############
-	delete-merged-branches = "!git o master && git branch --merged | grep -v '\\*' | xargs -nl git branch -d"
-	#############
-	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
-	#############
-	filelog = log -u
-	fl = log -u
-
+  glog = log --all --pretty='format:%d %Cgreen%h%Creset %an - %s' --graph
+  gs = status
+  gcm = commit -m
+  gco = checkout
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 227
+	frag = magenta bold
+	commit = 227 bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[gpg]
+	program = gpg

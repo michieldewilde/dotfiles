@@ -65,22 +65,14 @@ export PATH="$HOME/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 
 # Settings for golang
-export GOPATH="$HOME/Development/go"
-export GOBIN="$GOPATH/bin"
-export PATH="$GOBIN:$PATH"
-
-# Settings for rust
-export CARGOPATH="$HOME/.cargo"
-export CARGOBIN="$CARGOPATH/bin"
-export PATH="$CARGOBIN:$PATH"
+#export GOPATH="$HOME/development"
+#export GOROOT="/usr/local/bin/go"
+#export GOBIN="$GOPATH/bin"
+#export PATH="$GOBIN:$PATH"
 
 # Setting for npm to PATH
 export NPM="/usr/local/bin/npm:./node_modules/.bin"
 export PATH="$NPM:$PATH"
-
-# Settings for anaconda
-export CONDAPATH="/usr/local/anaconda3/bin"
-export PATH="$CONDAPATH:$PATH"
 
 # declare the environment variables
 export CORRECT_IGNORE='_*'
@@ -96,3 +88,5 @@ export INTERACTIVE_FILTER="fzf:peco:percol:gof:pick"
 
 # fzf - command-line fuzzy finder (https://github.com/junegunn/fzf)
 export FZF_DEFAULT_OPTS="--extended --ansi --multi"
+
+unset ZPLUG_CACHE_FILE

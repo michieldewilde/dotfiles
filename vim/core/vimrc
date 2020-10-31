@@ -1,0 +1,11 @@
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/core/general.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/core/plugins.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/core/bindings.vim
+source $HOME/development/src/github.com/michieldewilde/dotfiles/vim/core/functions.vim
+
+if dein#check_install()
+  call dein#install()
+endif
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect

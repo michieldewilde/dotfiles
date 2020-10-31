@@ -26,10 +26,6 @@ inoremap jk <esc>
 " Find merge conflict markers
 noremap <leader>gm /\v^[<\|=>]{7}( .*\|$)<CR>
 
-" tabpage mappings
-noremap <Leader>tn :tabnext<CR>
-noremap <Leader>t :tabnew<CR>
-
 " buffer mappings
 noremap <Leader>bn :bn<CR>
 noremap <Leader>bp :bp<CR>
@@ -44,18 +40,8 @@ nnoremap ci, f,cT,
 nnoremap da, f,ld2F,i,<ESC>l "delete argument
 nnoremap ca, f,ld7F,i,<ESC>a "delete arg and insert
 
-"Replace mappings
-nnoremap <leader>rl 0:s/
-nnoremap <leader>rp {ma}mb:'a,'bs/
-
-" upper or lowercase the current word
-nnoremap g^ gUiW
-nnoremap gv guiW
-
 " gO to create a new line below cursor in normal mode
 nnoremap go o<ESC>k
-
-" go to create a new line above cursor
 nnoremap gO O<ESC>j
 
 " I really hate that things don't auto-center
@@ -75,18 +61,8 @@ nnoremap Y y$
 " Toggle highlight search with <leader>thl
 nnoremap <leader>thl :set hlsearch!<CR>
 
-" close buffer with leader-q
-" and safe & close buffer with leader-wq
-nnoremap <leader>q :bd<CR>
-nnoremap <leader>wq :w<CR>:bd<CR>
-
 " Paste and keep indent
 command! PasteCode call s:PasteCode()
-
-" Go to previous and next item in quickfix list
-noremap <leader>cn :cnext<CR>
-noremap <leader>cp :cprev<CR>
-" }}}
 
 " Copy & paste to and from system clipboard
 vmap <Leader>y "+y
@@ -109,7 +85,7 @@ noremap <leader>sf :w<CR>
 " Open vimrc with <leader>fed
 nnoremap <leader>fed  :e $MYVIMRC<CR>
 nnoremap <leader>feR :source $MYVIMRC<CR>
-nnoremap <leader>fep :e ~/development/src/github.com/michieldewilde/dotfiles/vim/plugins.vim<CR>
+nnoremap <leader>fep :e ~/development/src/github.com/michieldewilde/dotfiles/vim/core/plugins.vim<CR>
 
 " Rename current file with <leader>fr
 noremap <leader>fr :call RenameFile()<CR>
@@ -118,6 +94,28 @@ noremap <leader>fr :call RenameFile()<CR>
 nnoremap <Leader>ff :Files<CR>
 " Find file in history with <leader> fh
 nnoremap <Leader>fh :History<CR>
-nnoremap <Leader>fs :Ag<CR>
+nnoremap <Leader>fs :Rg<CR>
 
 " }}}
+
+" ==============================================================================
+" Git Keybindings {{{
+" ============================================================================
+" Save
+noremap <leader>gs :Gstatus<CR>
+" }}}
+
+" ==============================================================================
+" Undo {{{
+" ============================================================================
+" Save
+noremap <leader>ut :UndotreeToggle<CR>
+noremap <leader>uf :UndotreeFocus<CR>
+" }}}
+
+" <Leader>f{char} to move to {char}
+map  <Leader>fm <Plug>(easymotion-bd-f)
+nmap <Leader>fm <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)

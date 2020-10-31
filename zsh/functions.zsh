@@ -113,7 +113,7 @@ function gfar() {
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
-functions fo() {
+function fo() {
     local out file key
     IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
     key=$(head -1 <<< "$out")
@@ -293,4 +293,65 @@ function update_mac {
     brew prune;
     echo '———> Running brew doctor...';
     brew doctor;
+}
+
+function kp {
+  ### PROCESS
+  # mnemonic: [K]ill [P]rocess
+  # show output of "ps -ef", use [tab] to select one or multiple entries
+  # press [enter] to kill selected processes and go back to the process list.
+  # or press [escape] to go back to the process list. Press [escape] twice to exit completely.
+
+  local pid=$(ps -ef | sed 1d | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[kill:process]'" | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+    kp
+  fi
+}
+
+function bip {
+  ### BREW + FZF
+  # update multiple packages at once
+  # mnemonic [B]rew [I]nstall [P]lugin
+
+  local inst=$(brew search | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[brew:install]'")
+
+  if [[ $inst ]]; then
+    for prog in $(echo $inst)
+    do brew install $prog
+    done
+  fi
+}
+
+function bup {
+  # uninstall multiple packages at once, async
+  # mnemonic [B]rew [C]lean [P]lugin (e.g. uninstall)
+
+  local upd=$(brew leaves | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[brew:update]'")
+
+  if [[ $upd ]]; then
+    for prog in $(echo $upd)
+    do brew upgrade $prog
+    done
+  fi
+}
+
+function bcp {
+  ### BREW + FZF
+  # mnemonic [B]rew [C]lean [P]lugin
+
+  local uninst=$(brew leaves | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[brew:clean]'")
+
+  if [[ $uninst ]]; then
+    for prog in $(echo $uninst)
+    do brew uninstall $prog
+    done
+  fi
+}
+
+function pid_lsof {
+  echo $(lsof -n -i4TCP:$1 | grep LISTEN | tr -s ' '  | cut -d' ' -f2)
+  echo $(lsof -i TCP:${1} | grep ${1} | tr -s ' ')
 }
